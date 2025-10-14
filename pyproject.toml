@@ -1,6 +1,6 @@
 [project]
 name = "pyquiz"
-version = "0.1.0"
+version = "0.2.0"
 description = "pyquiz - A terminal-based quiz written in Python."
 readme = "README.md"
 requires-python = ">=3.14"
@@ -17,7 +17,7 @@ dev = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.0"
+version = "0.2.0"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version",

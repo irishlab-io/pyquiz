@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.2.0 (2025-10-14)
+
+### Feat
+
+- minor code update
+
 ## v0.1.0 (2025-10-14)
 
 ### Feat
