@@ -1,0 +1,26 @@
+{
+  "questions": [
+    {
+      "correct_answer": "a",
+      "explanation": "Paris is the capital of France.",
+      "options": {
+        "a": "Paris",
+        "b": "London",
+        "c": "Berlin",
+        "d": "Madrid"
+      },
+      "question": "What is the capital of France?"
+    },
+    {
+      "correct_answer": "b",
+      "explanation": "2 + 2 equals 4.",
+      "options": {
+        "a": "3",
+        "b": "4",
+        "c": "5",
+        "d": "6"
+      },
+      "question": "2 + 2 = ?"
+    }
+  ]
+}
