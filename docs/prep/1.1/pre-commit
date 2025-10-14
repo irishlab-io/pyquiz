@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Pre-commit hook: run tests before allowing commit
+# Make sure this file is executable: chmod +x .git/hooks/pre-commit
+
+# Run pytest
+pytest -vv --color=yes --tb=short
+
+# Check test results and abort commit if tests fail
+if [ $? -ne 0 ]; then
+    echo "Tests failed, aborting commit."
+    exit 1
+fi

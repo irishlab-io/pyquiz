@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# Pre-commit hook: run tests before allowing commit
+# Make sure this file is executable: chmod +x .git/hooks/pre-commit
+
+# Check for unstaged changes
+if ! git diff --quiet; then
+    echo "[pre-commit] Warning: You have unstaged changes. They will NOT be tested!"
+fi
+
+# Detect Python environment (Poetry, venv, or system)
+# Run pytest in the appropriate environment
+if command -v poetry &> /dev/null; then
+    PYTEST_CMD="poetry run pytest -vv --color=yes --tb=no"
+    echo "[pre-commit] Using Poetry environment."
+elif command -v uv &> /dev/null; then
+    PYTEST_CMD="uv run pytest -vv --color=yes --tb=no"
+    echo "[pre-commit] Using UV environment."
+elif [ -f ".venv/bin/activate" ]; then
+    source .venv/bin/activate
+    PYTEST_CMD="pytest -vv --color=yes --tb=no"
+    echo "[pre-commit] Using .venv environment."
+else
+    PYTEST_CMD="pytest -vv --color=yes --tb=no"
+    echo "[pre-commit] Using system Python environment."
+fi
+
+# Optionally, only run tests for changed files (if any Python files staged)
+CHANGED_TESTS=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^tests/.*\.py$')
+if [ -n "$CHANGED_TESTS" ]; then
+    echo "[pre-commit] Running tests for changed files:"
+    echo "$CHANGED_TESTS"
+    $PYTEST_CMD $CHANGED_TESTS
+else
+    echo "[pre-commit] Running all tests."
+    $PYTEST_CMD
+fi
+
+# Check test results and abort commit if tests fail
+if [ $? -ne 0 ]; then
+    echo "[pre-commit] Tests failed, aborting commit."
+    exit 1
+else
+    echo "[pre-commit] All tests passed. Proceeding with commit."
+fi
