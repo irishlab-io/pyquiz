@@ -16,7 +16,7 @@ Il est plus sage de prendre des mesures pour éviter un problème que d'attendre
 
 ![Shift-Left](./assets/shift-left.png)
 
-Ce graphique provenant de [Applied Software Measurement: Global Analysis of Productivity and Quality](https://www.accessengineeringlibrary.com/binary/mheaeworks/829ef30c60b20d92/96af26c048a067d5d3bec53ac2b2c7ddc143c27fbf02f78bc72c6894d93f431a/book-summary.pdf) démontre les coûts associés à l'introduction des défectuosités et où ses introductions se produisent.[^1]
+Ce graphique provenant de [Applied Software Measurement: Global Analysis of Productivity and Quality](https://www.accessengineeringlibrary.com/binary/mheaeworks/829ef30c60b20d92/96af26c048a067d5d3bec53ac2b2c7ddc143c27fbf02f78bc72c6894d93f431a/book-summary.pdf) démontre les coûts associés à l'introduction des défectuosités et où ses introductions se produisent.
 
 Dès lors, l'idée du **shift-left** c'est de déplacer les capacités de détection "vers la gauche" plus près d'où ces défectuosités sont créées et introduites dans le code.
 
@@ -183,10 +183,6 @@ Il y a plusieurs considérations lors de la mise en place d'une pratique de `pre
   - Êtes-vous prêt à irriter les devs à chaque `git commit` ?
   - Commencer à petits pas, l'embarquement de cette méthodologie prendra un peu de temps et surtout la rendre facultative.
 
-## Q&A
-
 ---
 
-## Reference
-
-[^1]: This is the first footnote.
+## Q&A
