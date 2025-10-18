@@ -34,7 +34,6 @@ Ces ajouts créent une charge mentale supplémentaire pour les développeurs.  C
 
 Pour la presentation, j'ai decide de batir une petite application simple en `python`.  Cette application est un petit quiz dans un terminal.  Le but c'est que plutot d'observer passivement une presentation, je vous propose une demarche etape par etape.
 
-
 Biensur, qu'aujourd'hui je presente des outils et une approche, l'utilisation de celle-ci reste a contextualiser selon vos besoins et votre realite.  C'est aussi un peu comme les show de cuisines, tout est preparer backstage.
 
 ## git
@@ -63,6 +62,7 @@ cp docs/prep/1.1/pre-commit .git/hooks
 On voit dans notre exemple que certain de nos tests unitaires ne fonctionne pas.  Ici nous empêchons l'ajout d'un commit supplémentaire puisque le politiques du projet imposent le succès de ceux-ci via un `git hook`.
 
 Voyons un deuxième exemple plus évolué...
+
 ```bash
 cp docs/prep/1.2/pre-commit .git/hooks
 ```
@@ -93,16 +93,21 @@ Une pléthore d'outils outils open-source tentent de résoudre ces problème ave
 Pour les fins de la démonstration, utilisons le framework écrit en python `Pre-Commit.com` mais tous fonctionne sensiblement avec une méthodologie similaire avec des résultats équivalents.  L'objectif étant de créer un niveau d'abstraction entre le déploiement des `git hook` un et framework plus neutre et conviviable.
 
 1. Pour installer `Pre-Commit`...
+
    ```bash
    pip install pre-commit
    uv tool install pre-commit
    ```
+
 2. Installer le framework dans le dépot
+
    ```bash
    pre-commit --version
    pre-commit install --allow-missing-config
    ```
+
 3. Configurer le fichier `pre-commit-config.yaml`
+
    ```bash
    cp docs/prep/2.1/not.pre-commit-config.yaml .pre-commit-config.yaml
    ```
@@ -116,10 +121,13 @@ La fuite de secret est clairement un des enjeux les plus populaires des dernièr
 Pour des fin de démonstration, assumons que l'utilitaire de détection `trufflehog` est disponible pour balayer notre dépot de code.
 
 1. Pour installer `trufflehog`...
+
    ```bash
     trufflehog --version
    ```
+
 2. Configurer le fichier `pre-commit-config.yaml`
+
    ```bash
    cp docs/prep/2.2/not.pre-commit-config.yaml .pre-commit-config.yaml
    ```
@@ -131,16 +139,21 @@ Maintenant à chaque commits, nous sommes en mesure de scanner le dépot de code
 La prochaine charge mentale qui touche les développeurs est souvent en lien avec les conventions de code.  L'utilisation du `pre-commit` peut décharger mentalement ceux-ci et automatiser une tâche plutôt répétitive en action automagique.
 
 1. Configurer le fichier `pre-commit-config.yaml`
+
    ```bash
    cp docs/prep/2.3/not.pre-commit-config.yaml .pre-commit-config.yaml &&
    cp -r docs/prep/2.3/.config .config/
    ```
+
 2. Exécution **ad-hoc**
+
    ```bash
    pre-commit run --all-files
    SKIP=trufflehog pre-commit run --all-files
    ```
+
 3. Ne pas exécuter le pre-commit
+
    ```bash
    touch demo/3
    git add .

@@ -2,7 +2,8 @@
 
 A simple and interactive terminal-based quiz application written in Python.
 
-### Requirements
+## Requirements
+
 - Python 3.13 or higher
 - No external dependencies required (uses only Python standard library)
 
@@ -20,14 +21,14 @@ A simple and interactive terminal-based quiz application written in Python.
 
 Run the quiz application:
 
-```
+```bash
 python3 apps/main.py
 ```
 
 ### Docker
 
 ```bash
-docker buildx create \ 
+docker buildx create \
   --name multiarch-builder \
   --driver docker-container \
   --bootstrap \

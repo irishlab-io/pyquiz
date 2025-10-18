@@ -16,35 +16,34 @@ concurrency:
 jobs:
 
   pre-commit:
-    name: Placeholder - Pre-Commit Checks
+    name: Pre-Commit Checks
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
+      - name: Run Pre-Commit (prek) Checks
+        uses: j178/prek-action@91fd7d7cf70ae1dee9f4f44e7dfa5d1073fe6623 # v1.0.11
 
-      - name: Run Pre-Commit Checks
-        run: echo Pre-Commit Checks
-        shell: bash
+        env:
+          SKIP: "pytest,trufflehog"
 
   secret:
     needs:
       - pre-commit
-    name: Placeholder - Secret Scanning
+    name: Secret Scanning
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: TruffleHog OSS
         id: trufflehog
-        uses: trufflesecurity/trufflehog@main
+        uses: trufflesecurity/trufflehog@fd007c74cc95bf44ca6b7a493dfaf18a5415224e # main
         continue-on-error: true
         with:
           path: ./
@@ -54,11 +53,7 @@ jobs:
 
       - name: Scan Results Status
         if: steps.trufflehog.outcome == 'failure'
-        run: |
-          echo "Secret Scanning failed."
-          echo "Did you leak a secret accidentally?"
-          exit 1
-        shell: bash
+        run: exit 1
 
   sast:
     needs:
@@ -69,7 +64,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Run SAST
         run: echo Static Application Security Testing
@@ -84,7 +79,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Run SCA
         run: echo Software Composition Analysis

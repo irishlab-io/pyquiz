@@ -3,13 +3,12 @@
 from quiz import Quiz
 
 
-def main():  
+def main():
     """Entry point for the quiz application."""
-    quiz = Quiz()  
-    
+    quiz = Quiz()
+
     quiz.run()
-    
-     
+
+
 if __name__ == "__main__":
     main()
-      
