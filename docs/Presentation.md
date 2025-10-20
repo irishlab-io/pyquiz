@@ -20,20 +20,21 @@ Ce graphique provenant de [Applied Software Measurement: Global Analysis of Prod
 
 Dès lors, l'idée du **shift-left** c'est de déplacer les capacités de détection "vers la gauche" plus près d'où ces défectuosités sont créées et introduites dans le code.
 
+### Objectifs
+
 On demande aux développeurs soudainement d'inclure de nouveaux outils et pratiques dans leur flux de travail :
 
-- Oublie pas d'exécuter les tests unitaires localement
-- Fais un balayage de tes commits pour des fuites de secrets
-- SVP lint le code selon nos obscures conventions
-- Nouvelle politique que les CI actions doivent être `SHA pinned`
-- Et tout le reste qu'on veut bien inventer
+- [ ] Oublie pas d'exécuter les tests unitaires localement
+- [ ] Fais un balayage de tes commits pour des fuites de secrets
+- [ ] SVP lint le code selon nos obscures conventions
+- [ ] Nouvelle politique que les CI actions doivent être `SHA pinned`
+- [ ] Et tout le reste qu'on veut bien inventer
 
 Ces ajouts créent une charge mentale supplémentaire pour les développeurs.  Ceux-ci doivent maintenant considérer une checklist et une multitude de nouvelles tâches à faire mécaniquement.  Cette charge mentale accrue en plus de la complexité inhérente à leur travail rend l'acceptation du shift-left difficile.  Les devs ne sont pas paresseux et il faut les outiller avec des automatisations.
 
 ### pyquiz
 
 Pour la présentation, j'ai décidé de bâtir une petite application simple en `python`.  Cette application est un petit quiz dans un terminal.  Le but c'est que plutôt d'observer passivement une présentation, je vous propose une démarche étape par étape.
-
 
 Bien sûr, qu'aujourd'hui je présente des outils et une approche, l'utilisation de celle-ci reste à contextualiser selon vos besoins et votre réalité.  C'est aussi un peu comme les shows de cuisine, tout est préparé backstage.
 
@@ -56,16 +57,19 @@ Regardons le fonctionnement des `git hooks` natifs.  Lorsqu'on initialise un nou
 
 Voyons de plus près comment on fabrique et utilise notre premier **hook**.
 
-```bash
-cp docs/prep/1.1/pre-commit .git/hooks
-```
+1. Notre premier **hook** utilisant `git hooks natif`...
+
+   ```bash
+   cp docs/prep/1.1/pre-commit .git/hooks
+   ```
+
+2. Évoluer du premier **hook**
+
+   ```bash
+   cp docs/prep/1.2/pre-commit .git/hooks
+   ```
 
 On voit dans notre exemple que certains de nos tests unitaires ne fonctionnent pas.  Ici nous empêchons l'ajout d'un commit supplémentaire puisque les politiques du projet imposent le succès de ceux-ci via un `git hook`.
-
-Voyons un deuxième exemple plus évolué...
-```bash
-cp docs/prep/1.2/pre-commit .git/hooks
-```
 
 Cet exemple est plus complexe, commence à inclure du error handling, des configurations diverses, etc... On peut donc s'imaginer que cette approche sera lourde à orchestrer si on souhaite appliquer toutes les politiques des pratiques de devs et de la sécurité applicative...
 
@@ -79,30 +83,35 @@ De plus, il y a un éléphant dans la pièce... Les `git hooks` natifs sont cons
 
 Une pléthore d'outils open-source tentent de résoudre ces problèmes avec différentes approches.  Sans tous les nommer :
 
-- [Pre-Commit](https://pre-commit.com/) - A framework for managing and maintaining multi-language pre-commit hooks
-- [Husky](https://typicode.github.io/husky/) - Git hooks made easy 🐶 woof!
+- **[Pre-Commit](https://pre-commit.com)** - A framework for managing and maintaining multi-language pre-commit hooks
+- **[Husky](https://typicode.github.io/husky)** - Git hooks made easy
 - [CaptainHook](https://github.com/captainhook-git/captainhook) - Git hooks manager for PHP developers
 - [Git Build Hook Maven Plugin](https://github.com/rudikershaw/git-build-hook) - Install Git hooks and config during a Maven build
 - [Lefthook](https://github.com/evilmartians/lefthook) - Fast and powerful Git hooks manager for any type of projects
 - [Overcommit](https://github.com/sds/overcommit) - A fully configurable and extendable git hook manager
+- [Prek](https://github.com/j178/prek) - Better `pre-commit`, re-engineered in Rust
 - [Simple-git-hooks](https://github.com/toplenboren/simple-git-hooks) - A simple git hooks manager for small projects
-- [Prek](https://github.com/j178/prek) - ⚡ Better `pre-commit`, re-engineered in Rust
 
 ### pre-commit.com
 
 Pour les fins de la démonstration, utilisons le framework écrit en python `Pre-Commit.com` mais tous fonctionnent sensiblement avec une méthodologie similaire avec des résultats équivalents.  L'objectif étant de créer un niveau d'abstraction entre le déploiement des `git hook` et un framework plus neutre et convivial.
 
 1. Pour installer `Pre-Commit`...
+
    ```bash
    pip install pre-commit
    uv tool install pre-commit
    ```
+
 2. Installer le framework dans le dépôt
+
    ```bash
    pre-commit --version
    pre-commit install --allow-missing-config
    ```
+
 3. Configurer le fichier `pre-commit-config.yaml`
+
    ```bash
    cp docs/prep/2.1/not.pre-commit-config.yaml .pre-commit-config.yaml
    ```
@@ -116,10 +125,13 @@ La fuite de secret est clairement un des enjeux les plus populaires des dernièr
 Pour des fins de démonstration, assumons que l'utilitaire de détection `trufflehog` est disponible pour balayer notre dépôt de code.
 
 1. Pour installer `trufflehog`...
+
    ```bash
     trufflehog --version
    ```
+
 2. Configurer le fichier `pre-commit-config.yaml`
+
    ```bash
    cp docs/prep/2.2/not.pre-commit-config.yaml .pre-commit-config.yaml
    ```
@@ -131,16 +143,22 @@ Maintenant à chaque commit, nous sommes en mesure de scanner le dépôt de code
 La prochaine charge mentale qui touche les développeurs est souvent en lien avec les conventions de code.  L'utilisation du `pre-commit` peut décharger mentalement ceux-ci et automatiser une tâche plutôt répétitive en action automagique.
 
 1. Configurer le fichier `pre-commit-config.yaml`
+
    ```bash
    cp docs/prep/2.3/not.pre-commit-config.yaml .pre-commit-config.yaml &&
    cp -r docs/prep/2.3/.config .config/
    ```
+
 2. Exécution **ad-hoc**
+
    ```bash
    pre-commit run --all-files
    SKIP=trufflehog pre-commit run --all-files
+   # stages: [manual]
    ```
+
 3. Ne pas exécuter le pre-commit
+
    ```bash
    touch demo/3
    git add .
@@ -157,9 +175,9 @@ L'objectif à atteindre c'est la qualité du code et non d'exécuter des `pre-co
 
 Comment peut-on s'assurer que la qualité est atteinte ? On réplique les actions des `pre-commit hooks` dans le CI pipeline et on documente :
 
-- `PULL_REQUEST_TEMPLATE.md`
-- `CONTRIBUTING.md`
-- GH Action
+- [`CONTRIBUTING.md`](./prep/3.1/CONTRIBUTING.md)
+- [`PULL_REQUEST_TEMPLATE.md`](./prep/3.1/PULL_REQUEST_TEMPLATE.md)
+- [GH Action](./prep/3.1/.github/worklfows/pr.yml)
 
 Maintenant si un dev oublie ou décide de ne pas exécuter le framework de `pre-commit` localement sur sa machine avant de pousser son code.  Le CI pipeline échoue et lorsqu'on fait notre **code review**, la première question devrait être... Pourquoi as-tu skippé tes `pre-commit`.  Il peut avoir d'excellentes raisons :
 

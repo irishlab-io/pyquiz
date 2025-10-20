@@ -77,6 +77,8 @@ repos:
         exclude: ^.github/workflows/*
         entry: bash -c 'trufflehog --no-update git file://. --since-commit HEAD --fail'
         language: system
+        stages:
+          - manual
   - repo: local
     hooks:
       - id: pin-github-action
