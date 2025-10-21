@@ -11,17 +11,17 @@ RUN apt-get update && \
 
 ADD https://astral.sh/uv/${UV_VERSION}/install.sh /install.sh
 RUN chmod -R 755 /install.sh && /install.sh && rm /install.sh
-  
+
 ENV PATH="/root/.local/bin:${PATH}"
 
 WORKDIR /app
-   
+
 COPY ./pyproject.toml .
 
 RUN uv sync
 
 ##  Production Stage  ##
-  
+
 FROM python:latest AS production
 
 RUN useradd --create-home appuser
@@ -31,7 +31,7 @@ WORKDIR /app
 
 COPY --from=builder /app/.venv .venv
 COPY . .
-  
+
 ENV PATH="/app/.venv/bin:$PATH"
 
 CMD ["python", "apps/main.py"]

@@ -1,6 +1,6 @@
 import json
-import os 
-import sys 
+import os
+import sys
 
 
 
@@ -11,55 +11,55 @@ class Quiz:
     def __init__(self, questions_file: str = "../data/questions.json"):
         """Initialize the quiz with questions from a JSON file."""
         self.questions_file = questions_file
-        self.questions = [] 
-        self.score = 0  
+        self.questions = []
+        self.score = 0
         self.total_questions = 0
-        self.load_questions() 
+        self.load_questions()
 
     def load_questions(self):
         """Load questions from JSON file."""
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        questions_path = os.path.join(script_dir, self.questions_file) 
+        questions_path = os.path.join(script_dir, self.questions_file)
 
         try:
-            with open(questions_path) as f: 
-                data = json.load(f) 
+            with open(questions_path) as f:
+                data = json.load(f)
                 self.questions = data.get("questions", [])
                 self.total_questions = len(self.questions)
-        except FileNotFoundError: 
+        except FileNotFoundError:
             print(f"Error: Questions file '{self.questions_file}' not found.")
-            sys.exit(1) 
+            sys.exit(1)
         except json.JSONDecodeError:
             print(f"Error: Invalid JSON in '{self.questions_file}'.")
-            sys.exit(1)  
+            sys.exit(1)
 
     def display_welcome(self):
-        """Display welcome message.""" 
-        print("\n" + "=" * 60) 
+        """Display welcome message."""
+        print("\n" + "=" * 60)
         print("  Welcome to PyQuiz - Interactive Terminal Quiz")
-        print("=" * 60) 
-        print(f"\nYou will be asked {self.total_questions} questions.")  
+        print("=" * 60)
+        print(f"\nYou will be asked {self.total_questions} questions.")
         print("Type the letter of your answer (a, b, c, or d) and press Enter.")
-        print("=" * 60 + "\n")  
+        print("=" * 60 + "\n")
 
 
 
     def display_question(self, question_num: int, question: dict):
         """Display a single question with its options."""
         print(f"\nQuestion {question_num}/{self.total_questions}")
-        print("-" * 60)     
+        print("-" * 60)
         print(f"Q: {question['question']}")
-        print()   
+        print()
 
         for option_key, option_value in question["options"].items():
-            print(f"  {option_key}) {option_value}")        
-        print()  
+            print(f"  {option_key}) {option_value}")
+        print()
 
     def get_user_answer(self) -> str:
         """Get and validate user input."""
-        valid_options = ["a", "b", "c", "d"]        
+        valid_options = ["a", "b", "c", "d"]
 
-        while True:   
+        while True:
             answer = input("Your answer: ").strip().lower()
 
             if answer in valid_options:
@@ -71,7 +71,7 @@ class Quiz:
 
     def check_answer(self, user_answer: str, correct_answer: str) -> bool:
         """Check if the user's answer is correct."""
-        return user_answer == correct_answer.lower() 
+        return user_answer == correct_answer.lower()
 
     def display_result(
         self, is_correct: bool, correct_answer: str, explanation: str = None
@@ -85,7 +85,7 @@ class Quiz:
             print(f"✗ Incorrect. The correct answer was: {correct_answer.upper()}")
 
         if explanation:
-            print(f"Explanation: {explanation}")    
+            print(f"Explanation: {explanation}")
 
         print()
 
@@ -97,7 +97,7 @@ class Quiz:
 
         print("\n" + "=" * 60)
         print("  Quiz Complete!")
-        print("=" * 60)   
+        print("=" * 60)
         print(f"\nYour Score: {self.score}/{self.total_questions}")
         print(f"Percentage: {percentage:.1f}%")
 
