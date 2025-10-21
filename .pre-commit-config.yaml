@@ -10,8 +10,16 @@ fail_fast: true
 default_stages:
   - pre-commit
 default_install_hook_types:
+  - commit-msg
   - pre-commit
 repos:
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.9.1
+    hooks:
+      - id: commitizen
+        name: "commitizen | validate commit messages"
+        stages:
+          - commit-msg
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -69,6 +77,8 @@ repos:
         exclude: ^.github/workflows/*
         entry: bash -c 'trufflehog --no-update git file://. --since-commit HEAD --fail'
         language: system
+        stages:
+          - manual
   - repo: local
     hooks:
       - id: pin-github-action
@@ -82,3 +92,9 @@ repos:
         language: node
         additional_dependencies:
           - pin-github-action@3.4.0
+  - repo: https://github.com/irishlab-io/pin-docker-digest
+    rev: v0.1.0
+    hooks:
+      - id: pin-dockerfile
+        name: "security | dockerfile: pinned sha"
+        files: ^Dockerfile$
