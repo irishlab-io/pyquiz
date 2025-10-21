@@ -1,0 +1,33 @@
+---
+# pre-commit install --allow-missing-config
+# pre-commit autoupdate
+# pre-commit run --all-files --color auto
+exclude: |
+  (?x)^(
+    \.pre-commit-config\.yaml$
+  )
+fail_fast: true
+default_stages:
+  - pre-commit
+default_install_hook_types:
+  - pre-commit
+repos:
+  - repo: local
+    hooks:
+      - id: pytest
+        name: "pytest | run unit tests"
+        entry: pytest -vv --color=yes --tb=no
+        language: system
+        types:
+          - python
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: trufflehog
+        name: "security | truffleHog: detect secrets"
+        exclude: ^.github/workflows/*
+        entry: bash -c 'trufflehog --no-update git file://. --since-commit 077ef896e6dce0a8078079d7d70492c6fe8c0670 --fail'
+        language: system
+        stages:
+          - manual
