@@ -16,7 +16,7 @@ concurrency:
 jobs:
 
   pre-commit:
-    name: Placeholder - Pre-Commit Checks
+    name: Pre-Commit Checks
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
@@ -27,14 +27,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - name: Run Pre-Commit Checks
-        run: echo Pre-Commit Checks
-        shell: bash
+        env:
+          SKIP: "pytest,trufflehog,pin-dockerfile"
 
   secret:
     needs:
       - pre-commit
-    name: Placeholder - Secret Scanning
+    name: Secret Scanning
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
@@ -54,11 +53,7 @@ jobs:
 
       - name: Scan Results Status
         if: steps.trufflehog.outcome == 'failure'
-        run: |
-          echo "Secret Scanning failed."
-          echo "Did you leak a secret accidentally?"
-          exit 1
-        shell: bash
+        run: exit 1
 
   sast:
     needs:

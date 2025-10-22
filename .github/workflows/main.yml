@@ -16,7 +16,7 @@ jobs:
 
   pre-commit:
     if: ${{ ! startsWith(github.event.head_commit.message, 'bump:') }}
-    name: Placeholder - Pre-Commit Checks
+    name: Pre-Commit Checks
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
@@ -24,15 +24,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - name: Run Pre-Commit Checks
-        run: echo Pre-Commit Checks
-        shell: bash
+      - name: Run Pre-Commit (prek) Checks
+        uses: j178/prek-action@91fd7d7cf70ae1dee9f4f44e7dfa5d1073fe6623 # v1.0.11
+
+        env:
+          SKIP: "pytest,trufflehog,pin-dockerfile"
 
   secret:
     if: ${{ ! startsWith(github.event.head_commit.message, 'bump:') }}
     needs:
       - pre-commit
-    name: Placeholder - Secret Scanning
+    name: Secret Scanning
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
@@ -40,9 +42,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - name: Run Secret Scanning
-        run: echo Secret Scanning
-        shell: bash
+      - name: TruffleHog OSS
+        id: trufflehog
+        uses: trufflesecurity/trufflehog@24c73b0cb64f4a91de562182cced0f0a8c34a03c # main
+        continue-on-error: true
+        with:
+          path: ./
+          base: "${{ github.event.repository.default_branch }}"
+          head: HEAD
+          extra_args: --debug
+
+      - name: Scan Results Status
+        if: steps.trufflehog.outcome == 'failure'
+        run: exit 1
 
   sast:
     if: ${{ ! startsWith(github.event.head_commit.message, 'bump:') }}
