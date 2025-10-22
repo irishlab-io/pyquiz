@@ -4,6 +4,10 @@
 
 <!-- Describe the scope of your change - i.e. what the change does. -->
 
+- [ ] `pre-commit` hooks were ran
+- [ ] All tests have passed
+- [ ] Conventional commits was used
+
 ## Description of the change
 
 <!-- Describe the scope of your change - i.e. what the change does. -->

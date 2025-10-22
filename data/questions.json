@@ -1,17 +1,18 @@
 {
   "questions": [
     {
-      "explanation": "SQL injection exploits improper input validation in database queries, allowing attackers to execute arbitrary SQL commands.",
       "correct_answer": "b",
+      "explanation": "SQL injection exploits improper input validation in database queries, allowing attackers to execute arbitrary SQL commands.",
       "options": {
-        "c": "Cross-site scripting",
         "a": "Buffer overflow",
         "b": "Improper input validation in database queries",
+        "c": "Cross-site scripting",
         "d": "Race conditions"
       },
       "question": "What does SQL injection exploit?"
     },
     {
+      "correct_answer": "d",
       "explanation": "GitHub Personal Token starts with ghp_XXXXX with an internal checksums.",
       "options": {
         "a": "zlrd3aimgvkmpspsx7hoqi3hqzjs3ecpxeilrkfx7edhhuycec6a",
@@ -19,32 +20,32 @@
         "c": "AIzaSyBSpHvt8l1f9qlppJqQW280vGacXgwNnrk",
         "d": "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"
       },
-      "correct_answer": "d",
       "question": "Which of these token are related with GitHub?"
     },
     {
       "correct_answer": "c",
       "explanation": "A firewall blocks unauthorized access to or from a private network.",
       "options": {
+        "a": "Encrypt data",
         "b": "Monitor network traffic",
         "c": "Block unauthorized access",
-        "a": "Encrypt data",
         "d": "Scan for viruses"
       },
       "question": "What is the main purpose of a firewall?"
     },
     {
       "correct_answer": "c",
+      "explanation": "AES is a symmetric encryption algorithm, not a hashing algorithm.",
       "options": {
-        "d": "SHA-1",
         "a": "SHA-256",
         "b": "MD5",
-        "c": "AES"
+        "c": "AES",
+        "d": "SHA-1"
       },
-      "explanation": "AES is a symmetric encryption algorithm, not a hashing algorithm.",
       "question": "Which of the following is NOT a common hashing algorithm?"
     },
     {
+      "correct_answer": "b",
       "explanation": "HTTPS secures communication over a network using SSL/TLS encryption.",
       "options": {
         "a": "Compress web pages",
@@ -52,10 +53,10 @@
         "c": "Host websites",
         "d": "Redirect traffic"
       },
-      "correct_answer": "b",
       "question": "What is the primary function of HTTPS?"
     },
     {
+      "correct_answer": "a",
       "explanation": "Git is a distributed version control system used for tracking changes in source code.",
       "options": {
         "a": "Git",
@@ -63,10 +64,10 @@
         "c": "Jenkins",
         "d": "Nginx"
       },
-      "correct_answer": "a",
       "question": "Which of the following is a version control system?"
     },
     {
+      "correct_answer": "a",
       "explanation": "XSS stands for Cross-Site Scripting, a vulnerability that allows attackers to inject malicious scripts into web pages.",
       "options": {
         "a": "Cross-Site Scripting",
@@ -74,10 +75,10 @@
         "c": "XML Secure Service",
         "d": "Cross Server Security"
       },
-      "correct_answer": "a",
       "question": "What does XSS stand for in cybersecurity?"
     },
     {
+      "correct_answer": "c",
       "explanation": "The PUT method is used to update a resource on the server.",
       "options": {
         "a": "GET",
@@ -85,10 +86,10 @@
         "c": "PUT",
         "d": "DELETE"
       },
-      "correct_answer": "c",
       "question": "Which HTTP method is used to update a resource?"
     },
     {
+      "correct_answer": "b",
       "explanation": "2FA provides an extra layer of security by requiring two forms of identification.",
       "options": {
         "a": "To speed up login",
@@ -96,10 +97,10 @@
         "c": "To store passwords",
         "d": "To encrypt data"
       },
-      "correct_answer": "b",
       "question": "What is the purpose of two-factor authentication (2FA)?"
     },
     {
+      "correct_answer": "d",
       "explanation": "Agile, Waterfall, and DevOps are all common software development methodologies or practices.",
       "options": {
         "a": "Agile",
@@ -107,7 +108,6 @@
         "c": "DevOps",
         "d": "All of the above"
       },
-      "correct_answer": "d",
       "question": "Which of the following is a common software development methodology?"
     }
   ]

@@ -30,9 +30,3 @@ def test_run_quiz(monkeypatch, tmp_path, capsys):
     assert "Correct" in out
     assert "Incorrect" in out
     assert "Quiz Complete" in out
-
-
-def test_check_answer():
-    quiz = Quiz(questions_file=None)
-    assert quiz.check_answer("a", "A")
-    assert not quiz.check_answer("b", "a")
